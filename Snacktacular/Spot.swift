@@ -27,6 +27,10 @@ class Spot: NSObject, MKAnnotation{
         return coordinate.latitude
     }
     
+    var location: CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude)
+    }
+    
     var title: String?{
         return name
     }
@@ -90,11 +94,13 @@ class Spot: NSObject, MKAnnotation{
             var ref: DocumentReference? = nil // let firestore create the new documentID
             ref = db.collection("spots").addDocument(data: dataToSave) {error in
                 if let error = error {
-                                   print("error: creating new document \(self.documentID)\(error.localizedDescription)")
+                    print("error: creating new document \(self.documentID)\(error.localizedDescription)")
                                    completed(false)
                                }else{
                     print("new document created with the ref ID \(ref?.documentID ?? "unknown document ")")
                                    completed(true)
+                    self.documentID = ref!.documentID
+                    completed(true)
                                }
             }
         }

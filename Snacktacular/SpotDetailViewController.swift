@@ -26,10 +26,16 @@ class SpotDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //mapView.delegate = self
+        
         if spot == nil{
             spot = Spot()
-            
+            //print("\(spot.coordinate)")
+            getLocation()
         }
+//        else{
+//            print("😜")
+//            print("\(spot.coordinate)")
+//        }
 
         let region = MKCoordinateRegion(center: spot.coordinate, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
         mapView.setRegion(region, animated: true)
